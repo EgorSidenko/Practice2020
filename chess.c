@@ -10,8 +10,8 @@
 int king[rows][cols];                  //king location
 int board_coordinate[rows][cols];      //board coordinate
 unsigned char board_color[rows][cols]; //board color(black, white)
-int x, y, counter=0, fm=0;                   //Coords of king, counter of steps king
-
+int x, y, counter=0, fm=0;             //Coords of king, counter of steps king
+//count how many option king has
 int MoveCounter(int turn){
   printf("Move print %d/%d\n", fm, turn);
   if (y >= 2 && x >=2 && y<=7 && x <=7)
@@ -47,6 +47,7 @@ void setup_board(){
       k *= -1;
   }
 }
+//show board, and movement of the king
 void display_board(){
   char line ='a';
   printf(" ");
@@ -78,6 +79,7 @@ void display_board(){
   }
    printf("\n");
 }
+//put king in random place in board
 void RandomPlaceKing(){
     srand((unsigned)time(NULL));
     //X
@@ -93,6 +95,7 @@ void RandomPlaceKing(){
     else if (y==0)
     y++;
 }
+//Fix function fgets
 int fixedFgets(char str[], int n)
 {
     int success = 1;
@@ -111,6 +114,7 @@ int fixedFgets(char str[], int n)
 }
 
 //return 1 - correct; return 0 - error(unable to make move up)
+//vertical and diagonal movement
 int UpMove()
 {
   if(y>1 && y!=0 && y <= 8){
@@ -153,7 +157,7 @@ int LeftMove(){
   }
   return 1;
 }
-
+//diagonal movement in all directions
 int Left_UpMove(){
     if(x>1 && x !=0 && x <=8 && y>=1 && y <=8 && y!=0){
   x=x-1;
@@ -198,56 +202,57 @@ int Right_DownMove(){
   }
   return 1;
 }
+//uses all functions from above to make king move
 void MoveSystemByTerminal(int turn){
   printf("--------\nMove setting:\nup\ndown\nright\nleft\nupleft\ndownleft\nupright\ndownright\n");
   display_board();
-  char AskMotion[ask];
+  char AskMotion[ask]; //command
   for(int turnNow=0;turnNow<turn;){
-      printf("~~~~~~\n");
-      fixedFgets(AskMotion, 9);
-      if (strncmp(AskMotion, "up", 3)==0)
+      printf("~~~~~~\n");       //separation
+      fixedFgets(AskMotion, 9); //input command of movement
+      if (strncmp(AskMotion, "up", 3)==0) // up move
       {
-      fm=turnNow+=UpMove();
-      display_board();
-      MoveCounter(turn);
+      fm=turnNow+=UpMove(); // showing how many steps king made
+      display_board();      // show updated chessboard
+      MoveCounter(turn);    // updates the counter of possible moves
       }
-      else if (strncmp(AskMotion, "down", 5)==0)
+      else if (strncmp(AskMotion, "down", 5)==0) // down move
       {
       fm=turnNow+=DownMove();
       display_board();
       MoveCounter(turn);
       }
-      else if (strncmp(AskMotion, "right", 6)==0)
+      else if (strncmp(AskMotion, "right", 6)==0) // right move
       {
       fm=turnNow+=RightMove();
       display_board();
       MoveCounter(turn);
       }
-      else if (strncmp(AskMotion, "left", 5)==0)
+      else if (strncmp(AskMotion, "left", 5)==0) // left move
       {
       fm=turnNow+=LeftMove();
       display_board();
       MoveCounter(turn);
       }
-      else if (strncmp(AskMotion, "upleft", 7)==0)
+      else if (strncmp(AskMotion, "upleft", 7)==0) // up and left move
       {
       fm=turnNow+=Left_UpMove();
       display_board();
       MoveCounter(turn);
       }
-      else if (strncmp(AskMotion, "downleft", 8)==0)
+      else if (strncmp(AskMotion, "downleft", 8)==0) // down and left move
       {
       fm=turnNow+=Left_DownMove();
       display_board();
       MoveCounter(turn);
       }
-        else if (strncmp(AskMotion, "upright", 8)==0)
+        else if (strncmp(AskMotion, "upright", 8)==0) // up and right move
       {
       fm=turnNow+=Right_UpMove();
       display_board();
       MoveCounter(turn);
       }
-        else if (strncmp(AskMotion, "downright", 8)==0)
+        else if (strncmp(AskMotion, "downright", 8)==0) // down and right move
       {
       fm=turnNow+=Right_DownMove();
       display_board();
