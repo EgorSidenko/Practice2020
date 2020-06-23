@@ -201,8 +201,8 @@ int Right_DownMove(){
 void MoveSystemByTerminal(int turn){
   printf("--------\nMove setting:\nup\ndown\nright\nleft\nupleft\ndownleft\nupright\ndownright\n");
   display_board();
+  char AskMotion[ask];
   for(int turnNow=0;turnNow<turn;){
-      char AskMotion[ask];
       printf("~~~~~~\n");
       fixedFgets(AskMotion, 9);
       if (strncmp(AskMotion, "up", 3)==0)
@@ -235,7 +235,7 @@ void MoveSystemByTerminal(int turn){
       display_board();
       MoveCounter(turn);
       }
-        else if (strncmp(AskMotion, "downleft", 8)==0)
+      else if (strncmp(AskMotion, "downleft", 8)==0)
       {
       fm=turnNow+=Left_DownMove();
       display_board();
